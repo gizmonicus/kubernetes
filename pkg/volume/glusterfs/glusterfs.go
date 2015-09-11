@@ -18,6 +18,7 @@ package glusterfs
 
 import (
 	"math/rand"
+    "time"
 	"os"
 
 	"github.com/golang/glog"
@@ -223,6 +224,7 @@ func (b *glusterfsBuilder) setUpAtInternal(dir string) error {
 
 	l := len(b.hosts.Subsets)
 	// Avoid mount storm, pick a host randomly.
+    rand.Seed(time.Now().UnixNano())
 	start := rand.Int() % l
 	// Iterate all hosts until mount succeeds.
 	for i := start; i < start+l; i++ {
